@@ -1,21 +1,20 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+// import 'babel-polyfill'
 import Vue from 'vue'
 import FastClick from 'fastclick'
-import VueRouter from 'vue-router'
+import Vuex from 'vuex'
 import App from './App'
-import Home from './components/HelloFromVux'
 
-Vue.use(VueRouter)
+import './globalComponents'
+import '@/css/normalize.css'
+import '@/css/public.css'
+import '@/css/page.css'
 
-const routes = [{
-  path: '/',
-  component: Home
-}]
+Vue.use(Vuex)
 
-const router = new VueRouter({
-  routes
-})
+import router from './router/index'
+// import store from './store/index'
 
 FastClick.attach(document.body)
 

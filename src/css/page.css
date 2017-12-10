@@ -1,0 +1,46 @@
+/* body{font-size: 16px;} */
+html, body, #app, .topics-page, .bs-wrapper{height: 100%;}
+
+.topics-page{position: relative;}
+
+.more-title{margin: 10px 10px 0 0;}
+.scroll-titles{position: relative; overflow: hidden; margin-right: 40px; 
+  /* box-shadow: -2px 0 4px rgba(0,0,0,.1) inset; */
+}
+.scroll-titles ul{width: 150%;}
+.scroll-titles li{border-bottom: 3px solid transparent;}
+.scroll-titles li.active{border-bottom-color: #f00;}
+.title-bar{position: absolute; bottom: 0; left: 0; width: 50px; height: 3px; background-color: #f00; 
+  transition: right 0.3s cubic-bezier(0.35, 0, 0.25, 1) 0.09s, left 0.3s cubic-bezier(0.35, 0, 0.25, 1);
+}
+/* .scroll-titles ul{width: 100%;} */
+.topic-titles{position: relative; background-color: #fffbf2; border-bottom: 1px solid #ccc; }
+.topic-title.fixed{position: fixed; z-index: 1; }
+.topic-titles .title{float: left; padding: 10px;}
+/* .topic-titles .title{display: inline; padding: 10px; white-space: nowrap;} */
+.bscroll-wrapper{position: absolute; top: 0px; bottom: 0; left: 0; right: 0; box-sizing: border-box; margin-top: 94px;}
+.bs-wrapper{position: relative; overflow: hidden; }
+.bs-wrapper .weui-cells{margin-top: 0;}
+
+.pulldown-wrapper{position: absolute; top: -50px; left: 0; right: 0; }
+.pulldown-wrapper .before-pulldown{text-align: center;}
+
+
+/* 发帖页面 */
+.input-toolbar-wrapper{position: fixed; z-index: 100; left: 0; right: 0; bottom: 0; background-color: #fff; border-top: 1px solid #ccc; padding: 10px 10px 6px; max-height: 250px; overflow-y: hidden;}
+.input-toolbar{}
+.input-toolbar span{vertical-align: middle;}
+
+
+/* emoji */
+/* .emoji{display: inline-block; width: 28px; height: 28px; font-size: 0;  vertical-align: middle; background: url('/static/img/qq_exp.png') 0 0 no-repeat; background-size: 434px 202px;  border-right: 1px solid #ccc; border-bottom: 1px solid #ccc;} */
+.emoji-panel .ctx{position: relative; margin-left: -10px; margin-right: -10px;}
+/* .emoji-panel .ctx ul{position: absolute;} */
+.emoji-panel .ctx .slide-item{float: left;}
+.emoji-panel .ctx .slide-item i{display: inline-block; width: 100%; height: 100%; background-size: contain;}
+.emoji{display: inline-block; box-sizing: border-box; font-size: 0; padding: 8px;}
+
+.richtext img{width: 20px; height: 20px; vertical-align: middle;}
+
+.emoji-panel li{float: left;}
+.emoji-panel li.active{color: #f00;}
