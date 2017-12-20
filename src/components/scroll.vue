@@ -105,10 +105,9 @@ export default {
       }
     },
     _initTap () {
-      this.$el.addEventListener('tap', e => {
-        console.log(e)
-        debugger
-      }, false)
+      // this.$el.addEventListener('tap', e => {
+      //   console.log(e)
+      // }, false)
     },
     _initPullDownRefresh () {
       this.scroll.on('pullingDown', () => {
@@ -126,7 +125,11 @@ export default {
     }
   },
   mounted () {
-    this.initScroll()
+    // debugger
+    // this.initScroll()
+    this.$nextTick(() => {
+      this.initScroll()
+    })
   }
 }
 </script>

@@ -6,12 +6,16 @@ import FastClick from 'fastclick'
 import Vuex from 'vuex'
 import App from './App'
 
+import { get } from 'lodash'
+
 import './globalComponents'
 import '@/css/normalize.css'
 import '@/css/public.css'
 import '@/css/page.css'
 
 Vue.use(Vuex)
+
+Vue.prototype.$get = get
 
 import router from './router/index'
 // import store from './store/index'

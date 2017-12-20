@@ -1,5 +1,5 @@
 <template>
-<div class="cf">
+<div class="cf upload-list">
   <div class="fl pr mr5" v-for="(file, idx) in files">
     <img :src="file.src" />
     <a href="javascript:" class="remove"

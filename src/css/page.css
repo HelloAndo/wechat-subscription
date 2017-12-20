@@ -1,5 +1,5 @@
 /* body{font-size: 16px;} */
-html, body, #app, .topics-page, .bs-wrapper{height: 100%;}
+html, body, #app, .topics-page, .bs-wrapper, .topic-page, .bs-wrapper{height: 100%;}
 
 .topics-page{position: relative;}
 
@@ -26,21 +26,54 @@ html, body, #app, .topics-page, .bs-wrapper{height: 100%;}
 .pulldown-wrapper .before-pulldown{text-align: center;}
 
 
+/* 话题详情页面 */
+.topic-page .bscroll-wrapper{margin-top: 46px;}
+
 /* 发帖页面 */
-.input-toolbar-wrapper{position: fixed; z-index: 100; left: 0; right: 0; bottom: 0; background-color: #fff; border-top: 1px solid #ccc; padding: 10px 10px 6px; max-height: 250px; overflow-y: hidden;}
+.input-toolbar-wrapper{position: fixed; z-index: 100; left: 0; right: 0; bottom: 0; background-color: #fff; box-shadow: 0 0px 10px rgba(0,0,0,0.2); padding: 10px 10px 6px; /* max-height: 250px; */ overflow-y: hidden;}
 .input-toolbar{}
 .input-toolbar span{vertical-align: middle;}
 
 
 /* emoji */
 /* .emoji{display: inline-block; width: 28px; height: 28px; font-size: 0;  vertical-align: middle; background: url('/static/img/qq_exp.png') 0 0 no-repeat; background-size: 434px 202px;  border-right: 1px solid #ccc; border-bottom: 1px solid #ccc;} */
+.emoji-panel{height: 200px; overflow: hidden;}
+.emoji-leave-active, .emoji-enter-active{
+  transition: height .4s ease;
+}
+.emoji-leave-active, .emoji-enter{
+  height: 0px !important;
+}
+.emoji-leave, .emoji-enter-active{
+  height: 200px;
+}
+
+.fade-leave-active, .fade-enter-active{
+  transition: all .4s ease;
+}
+.fade-leave-active, .fade-enter{
+  opacity: 0;
+}
+.fade-leave, .fade-enter-active{
+  opacity: 1;
+}
+
 .emoji-panel .ctx{position: relative; margin-left: -10px; margin-right: -10px;}
 /* .emoji-panel .ctx ul{position: absolute;} */
 .emoji-panel .ctx .slide-item{float: left;}
 .emoji-panel .ctx .slide-item i{display: inline-block; width: 100%; height: 100%; background-size: contain;}
 .emoji{display: inline-block; box-sizing: border-box; font-size: 0; padding: 8px;}
 
+/* photoUpload */
+.upload-list{border-bottom: 1px solid #e3e3e3; margin-bottom: 10px;}
+
+
+/* .richtext{background-color: #fff;} */
 .richtext img{width: 20px; height: 20px; vertical-align: middle;}
 
 .emoji-panel li{float: left;}
 .emoji-panel li.active{color: #f00;}
+
+
+/* 发布话题页面 */
+.publish-page .weui-cells{background-color: #fbf9fe;}

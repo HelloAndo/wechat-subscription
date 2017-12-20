@@ -13,9 +13,11 @@
       </tab-item>
     </tab>-->
     <div class="topic-titles">
-      <svg class="icon fr more-title" aria-hidden="true" width="20" height="20" >
-        <use xlink:href="#icon-fangwu"></use>
-      </svg>
+      <router-link :to="{name: 'Publish'}">
+        <svg class="icon fr more-title" aria-hidden="true" width="20" height="20" >
+          <use xlink:href="#icon-fangwu"></use>
+        </svg>
+      </router-link>
       <div class="scroll-titles" ref="titles">
         <ul class="cf" :style="{width: scrollWidth}">
           <li class="title"
@@ -40,7 +42,7 @@
         @pullingDownScroll="onPullingDownScroll"
         @pulling-up="onPullingUp">
         <div>   
-          <group v-for="(topic, i) in topics">
+          <group v-for="(topic, i) in topics" @click.native="gotoTopic($event, topic)">
             <cell-box >
               <div class="w-max">
                 <h5>{{i}}-{{topic.title}}</h5>
@@ -52,7 +54,7 @@
                     </svg>
                   </a>
                   <a href="javascript:" class="fr" 
-                    @click="onClick($event, topic, i)">
+                    @click.prevent="onClick($event, topic, i)">
                     <svg class="icon" aria-hidden="true" width="20px" height="20px">
                         <use xlink:href="#icon-dialog"></use>
                     </svg>
@@ -196,9 +198,12 @@
       })
     },
     methods: {
+      gotoTopic (e, topic) {
+        this.$router.push({name: 'Topic'})
+        // debugger
+      },
       onClick (e, item, idx) {
         console.log(e)
-        debugger
       },
       onNavTap (e) {
         let $el = $(e.target)

@@ -16,6 +16,7 @@
     "better-scroll": "^1.5.5",
     "fastclick": "^1.0.6",
     "jquery": "^3.2.1",
+    "lodash": "^4.17.4",
     "stylus-loader": "^3.0.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",

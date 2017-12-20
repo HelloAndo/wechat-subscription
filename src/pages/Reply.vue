@@ -1,35 +1,28 @@
 <template>
-<div class="publish-page">
+<div class="reply-page">
   <x-header>
-    <span>发布话题</span>
+    <span>回复</span>
     <x-button mini slot="overwrite-left" text="取消"
     @click.native="cancel"></x-button>
     <x-button mini slot="right" text="发送" 
-    @click.native="post"></x-button>
+    @click.native="reply"></x-button>
   </x-header>
-  <div>
-    <group gutter="0">
-      <x-input v-model="title"
-        type="text"
-        placeholder="标题（必填）"
-        ></x-input>
-    </group>
-    <editor></editor>
-  </div>
+  <editor></editor>
 </div>
 </template>
+
 <script>
 export default {
   data () {
     return {
-      title: ''
+
     }
   },
   methods: {
     cancel () {
       this.$router.back()
     },
-    post () {
+    reply () {
       this.$router.back()
     }
   }

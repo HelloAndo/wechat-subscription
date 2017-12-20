@@ -1,5 +1,5 @@
 <template>
-  <div class="richtext" contenteditable style="border: 1px solid #ccc;" 
+  <div class="richtext weui-cell" contenteditable 
     @click="click">
     <slot></slot>
   </div>
