@@ -11,7 +11,10 @@
     <group gutter="0">
       <x-input v-model="title"
         type="text"
+        ref="title"
         placeholder="标题（必填）"
+        @on-focus="onFocus($event)"
+        @on-blur="onBlur($event)"
         ></x-input>
     </group>
     <editor></editor>
@@ -19,13 +22,24 @@
 </div>
 </template>
 <script>
+// let timer
 export default {
   data () {
     return {
-      title: ''
+      title: '',
     }
   },
   methods: {
+    onFocus () {
+      // timer = setTimeout(() => {
+      //   this.placeholder = 'focus' + window.innerHeight.toString()
+      // }, 1500)
+    },
+    onBlur () {
+      // timer = setTimeout(() => {
+      //   this.placeholder = 'blur' + window.innerHeight.toString()
+      // }, 1500)
+    },
     cancel () {
       this.$router.back()
     },

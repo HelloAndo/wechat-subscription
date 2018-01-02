@@ -58,6 +58,16 @@ html, body, #app, .topics-page, .bs-wrapper, .topic-page, .bs-wrapper{height: 10
   opacity: 1;
 }
 
+.slide-left-leave-active, .slide-left-enter-active{
+  transition: left 2.4s ease;
+}
+.slide-left-leave-active, .slide-left-enter{
+  left: -100%;
+}
+.slide-left-leave, .slide-left-enter-active{
+  left: 0;
+}
+
 .emoji-panel .ctx{position: relative; margin-left: -10px; margin-right: -10px;}
 /* .emoji-panel .ctx ul{position: absolute;} */
 .emoji-panel .ctx .slide-item{float: left;}

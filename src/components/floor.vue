@@ -31,7 +31,8 @@
         <use xlink:href="#icon-bad"></use>
       </svg>
     </a>
-    <a href="javascript:" class="btn-reply fr">
+    <a href="javascript:" class="btn-reply fr"
+      @click="gotoReply()">
       <svg class="icon" aria-hidden="true" width="20px" height="20px">
         <use xlink:href="#icon-comment"></use>
       </svg>
@@ -48,6 +49,11 @@ export default {
   },
   data () {
     return {
+    }
+  },
+  methods: {
+    gotoReply () {
+      this.$router.push({name: 'Reply'})
     }
   }
 }

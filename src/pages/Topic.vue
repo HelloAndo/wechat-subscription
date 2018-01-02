@@ -56,7 +56,6 @@ export default {
   },
   methods: {
     onClick (e) {
-      debugger
     }
   }
 }
