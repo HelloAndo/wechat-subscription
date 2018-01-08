@@ -1,7 +1,8 @@
 <template>
   <div class="topics-page">
     <x-header :title="place"
-      :left-options="{showBack: true}"></x-header>
+      :left-options="{preventGoBack: true}"
+      @on-click-back="$router.push({name: 'Home'})"></x-header>
     <!--<tab>
       <tab-item v-for="t in tabs">{{t.name}}</tab-item>
       <tab-item disabled>
@@ -86,10 +87,27 @@
         </div>
       </scroll>
     </div>
+    <div class="footer text-right">
+      <a href="javascript:" class="refresh pt10" style="height:40px; "
+        @click="">
+        <svg class="icon" aria-hidden="true" width="30" height="30" >
+          <use xlink:href="#icon-refresh"></use>
+        </svg>
+      </a>
+      <a href="javascript:" class="publish pt10" style="height:40px; "
+        @click="$router.push({name: 'Publish'})">
+        <svg class="icon" aria-hidden="true" width="30" height="30" style="color:#e2bd7f">
+          <use xlink:href="#icon-publish"></use>
+        </svg>
+      </a>
+    </div>
   </div>
 </template>
 
 <script>
+
+  import { mapMutations } from 'vuex' 
+
   import $ from 'jquery'
   // import 'static/css/iconfont/iconfont'
   import BScroll from 'better-scroll'
@@ -198,9 +216,18 @@
       })
     },
     methods: {
+      ...mapMutations([
+        'RECORD_ENTRANCE_PAGE'
+      ]),
       gotoTopic (e, topic) {
-        this.$router.push({name: 'Topic'})
-        // debugger
+        this.RECORD_ENTRANCE_PAGE({
+          name: 'Topic',
+          id: this.$route.params.id
+        })
+        this.$router.push({name: 'Topic', query: {page: 1}})
+        // this.$router.push({
+        //   path: `/topic?page=1`
+        // })
       },
       onClick (e, item, idx) {
         console.log(e)

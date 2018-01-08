@@ -3,7 +3,7 @@
 // import 'babel-polyfill'
 import Vue from 'vue'
 import FastClick from 'fastclick'
-import Vuex from 'vuex'
+// import Vuex from 'vuex'
 import App from './App'
 
 import { get } from 'lodash'
@@ -13,12 +13,12 @@ import '@/css/normalize.css'
 import '@/css/public.css'
 import '@/css/page.css'
 
-Vue.use(Vuex)
+// Vue.use(Vuex)
 
 Vue.prototype.$get = get
 
 import router from './router/index'
-// import store from './store/index'
+import store from './store/index'
 
 FastClick.attach(document.body)
 
@@ -26,6 +26,7 @@ Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
+  store,
   router,
   render: h => h(App)
 }).$mount('#app-box')

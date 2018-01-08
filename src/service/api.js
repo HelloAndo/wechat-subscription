@@ -23,7 +23,8 @@ export default {
   getTopic (data) {
     // return this.post('/topic', data)
     return Promise.resolve({
-      topic: '主题' + Math.random(),
+      total: 10,
+      topic: `第${data.page || 1}页-主题${Math.random()}`,
       title: '我的大标题' + Math.random(),
       content: '楼主发表的话题正文楼主发表的话题正文楼主发表的话题正文',
       name: 'zht',
