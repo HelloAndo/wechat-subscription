@@ -2,7 +2,7 @@
   <div class="topics-page">
     <x-header :title="place"
       :left-options="{preventGoBack: true}"
-      @on-click-back="$router.push({name: 'Home'})"></x-header>
+      @on-click-back="gotoHome"></x-header>
     <!--<tab>
       <tab-item v-for="t in tabs">{{t.name}}</tab-item>
       <tab-item disabled>
@@ -28,8 +28,8 @@
         <!--<div class="title-bar" :class="titleBarClass" :style="titleBarStyle"></div><-->
       </div>
     </div>
-    <div class="bscroll-wrapper"> 
-      <scroll 
+    <div class="bscroll-wrapper">
+      <scroll
         ref="scroll"
         :click="bsConf.click"
         :tap="bsConf.tap"
@@ -42,7 +42,7 @@
         @pulling-down="onPullingDown"
         @pullingDownScroll="onPullingDownScroll"
         @pulling-up="onPullingUp">
-        <div>   
+        <div>
           <group v-for="(topic, i) in topics" @click.native="gotoTopic($event, topic)">
             <cell-box >
               <div class="w-max">
@@ -54,20 +54,19 @@
                         <use xlink:href="#icon-writer"></use>
                     </svg>
                   </a>
-                  <a href="javascript:" class="fr" 
+                  <a href="javascript:" class="fr"
                     @click.prevent="onClick($event, topic, i)">
                     <svg class="icon" aria-hidden="true" width="20px" height="20px">
                         <use xlink:href="#icon-dialog"></use>
                     </svg>
                     <span>999</span>
                   </a>
-                  <router-link class="fr mr10"
-                    :to="{name: 'Publish'}">
+                  <a class="fr mr10" href="javascript:">
                     <svg class="icon" aria-hidden="true" width="20px" height="20px">
                         <use xlink:href="#icon-clock"></use>
                     </svg>
                     <span>33小时前</span>
-                  </router-link>
+                  </a>
                 </div>
               </div>
             </cell-box>
@@ -106,7 +105,7 @@
 
 <script>
 
-  import { mapMutations } from 'vuex' 
+  import { mapMutations } from 'vuex'
 
   import $ from 'jquery'
   // import 'static/css/iconfont/iconfont'
@@ -188,12 +187,12 @@
     },
     created () {
       // this.fetchData()
-      
+
     },
     mounted () {
       this.tabs = tabs
       this.$nextTick(() => {
-        this.setScrollWidth() 
+        this.setScrollWidth()
         this.scroll = new BScroll(this.$refs.titles, {
           scrollX: true,
           scrollY: false,
@@ -217,9 +216,26 @@
     },
     methods: {
       ...mapMutations([
-        'RECORD_ENTRANCE_PAGE'
+        'RECORD_ENTRANCE_PAGE',
+        'CHANGE_PAGE_SWITCH_METHOD',
+        'RECORD_PAGE_SWITCH_ROUTE'
       ]),
+      gotoHome () {
+        this.RECORD_PAGE_SWITCH_ROUTE({
+          to: 'Home',
+          from: 'Place'
+        })
+        this.$router.push({name: 'Home'})
+        // this.CHANGE_PAGE_SWITCH_METHOD(false)
+        // this.$nextTick(() => {
+        //   this.CHANGE_PAGE_SWITCH_METHOD(true)
+        // })
+      },
       gotoTopic (e, topic) {
+        this.RECORD_PAGE_SWITCH_ROUTE({
+          to: 'Topic',
+          from: 'Place'
+        })
         this.RECORD_ENTRANCE_PAGE({
           name: 'Topic',
           id: this.$route.params.id
@@ -253,7 +269,7 @@
           })
       },
       setScrollWidth () {
-        
+
       },
       filter () {
         console.log('---filter')

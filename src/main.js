@@ -24,6 +24,17 @@ FastClick.attach(document.body)
 
 Vue.config.productionTip = false
 
+// vue-router和vuex通信
+import Page from './store/modules/page'
+router.beforeEach((to, from, next) => {
+  console.log(Page.state.fromPage)
+  store.commit('RECORD_PAGE_SWITCH_ROUTE', {
+    to: to.name,
+    from: from.name
+  })
+  next()
+})
+
 /* eslint-disable no-new */
 new Vue({
   store,

@@ -1,14 +1,27 @@
 <template>
   <div id="app">
-  <transition name="vux-pop-in">
+  <transition :name="isForward ? 'vux-pop-in' : 'vux-pop-out'">
+  <!--<transition name="vux-pop-in">-->
     <router-view></router-view>
   </transition>
   </div>
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex'
 export default {
-  name: 'app'
+  name: 'app',
+  computed: {
+    // ...mapState({
+    //   isForward: state => state.page.isForward
+    // })
+    ...mapGetters([
+      'isForward'
+    ])
+    // isForward () {
+    //   return this.$store.state.page.isForward
+    // }
+  }
 }
 </script>
 
