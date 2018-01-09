@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { CellBox, Cell, Divider, Group, Grid, GridItem, XButton, XHeader, XInput, Panel, Search, Tab, TabItem } from 'vux'
+import { CellBox, Cell, Divider, Group, Grid, GridItem, XButton, XHeader, XInput, Panel, Popup, Search, Tab, TabItem } from 'vux'
 
 import scroll from './components/scroll.vue'
 import loading from './components/loading/loading.vue'
@@ -29,6 +29,7 @@ Vue.component('XButton', XButton)
 Vue.component('XHeader', XHeader)
 Vue.component('XInput', XInput)
 Vue.component('Panel', Panel)
+Vue.component('Popup', Popup)
 Vue.component('Search', Search)
 Vue.component('Tab', Tab)
 Vue.component('TabItem', TabItem)

@@ -25,9 +25,18 @@ html, body, #app, .topics-page, .bs-wrapper, .topic-page, .bs-wrapper{height: 10
 .pulldown-wrapper{position: absolute; top: -50px; left: 0; right: 0; }
 .pulldown-wrapper .before-pulldown{text-align: center;}
 
+.footer{position: absolute; bottom: 0; left: 0; right: 0;}
+.footer>a{box-sizing: content-box; display: inline-block; text-align: center; vertical-align: middle; background-color: rgba(0,0,0,.2); width: 50px; height: 50px; border-radius: 50%; margin: 10px 5px;}
+.footer .page{width: 100px; border-radius: 30px;}
+.footer .page span{font-size: 25px; color: #e2bd7f;}
+
+.footer .icon{color: #e2bd7f;}
 
 /* 话题详情页面 */
 .topic-page .bscroll-wrapper{margin-top: 46px;}
+.pagination a{display: inline-block; width: 40px; height: 40px; text-align: center; font-size: 16px; background-color: rgba(0,0,0,.2); border-radius: 50%; margin: 4px 6px;}
+.pagination a.active{background-color: transparent;}
+.pagination a span{line-height: 40px;}
 
 /* 发帖页面 */
 .input-toolbar-wrapper{position: fixed; z-index: 100; left: 0; right: 0; bottom: 0; background-color: #fff; box-shadow: 0 0px 10px rgba(0,0,0,0.2); padding: 10px 10px 6px; /* max-height: 250px; */ overflow-y: hidden;}
@@ -68,6 +77,40 @@ html, body, #app, .topics-page, .bs-wrapper, .topic-page, .bs-wrapper{height: 10
   left: 0;
 }
 
+.vux-pop-out-enter-active,
+  .vux-pop-out-leave-active,
+  .vux-pop-in-enter-active,
+  .vux-pop-in-leave-active {
+    will-change: transform;
+    transition: all .3s;
+    height: 100%;
+    top: 0;
+    position: absolute;
+    backface-visibility: hidden;
+    perspective: 1000;
+  }
+
+  .vux-pop-out-enter {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  .vux-pop-out-leave-active {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+
+  .vux-pop-in-enter {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+
+  .vux-pop-in-leave-active {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+
+
 .emoji-panel .ctx{position: relative; margin-left: -10px; margin-right: -10px;}
 /* .emoji-panel .ctx ul{position: absolute;} */
 .emoji-panel .ctx .slide-item{float: left;}
@@ -79,6 +122,8 @@ html, body, #app, .topics-page, .bs-wrapper, .topic-page, .bs-wrapper{height: 10
 
 
 /* .richtext{background-color: #fff;} */
+.richtext, .richtext-mirror{width: 100%; background: transparent; border: none; box-sizing: border-box; resize: none; padding: 10px 15px;}
+/* .richtext-mirror{position: absolute; z-index: -9999; visibility: hidden;} */
 .richtext img{width: 20px; height: 20px; vertical-align: middle;}
 
 .emoji-panel li{float: left;}
@@ -87,3 +132,6 @@ html, body, #app, .topics-page, .bs-wrapper, .topic-page, .bs-wrapper{height: 10
 
 /* 发布话题页面 */
 .publish-page .weui-cells{background-color: #fbf9fe;}
+
+
+.icon{color: #f00}

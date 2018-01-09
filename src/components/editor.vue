@@ -1,15 +1,18 @@
 <template>
 <div>
   <richtext ref="richtext"
-    @myclick="rtClick">
-    <span>我是span</span>
-    <img src="/static/img/emoji/weixin/azv.png" alt="">123
+    @onClick="richtextClick"
+    @recordCursor="recordCursor">
+    <!--<span>a<b>b</b>cd</span><i>efgh</i>ijd-->
+    <!--<span>我是span</span>
+    <img src="/static/img/emoji/weixin/azv.png" alt="">123-->
     <!--<b>我是b</b><i>我是i</i>-->
   </richtext>
   <div class="input-toolbar-wrapper">
-    <upload-photo v-if="chosenFiles.length" 
+    <!--<upload-photo v-if="chosenFiles.length" 
       :files="chosenFiles">
-    </upload-photo>
+    </upload-photo>-->
+    <upload-photo v-show="curTab === 'photo'"></upload-photo>
     <div class="input-toolbar cf">
       <span class="fl mr15"
         @click="toEmoji">
@@ -18,13 +21,13 @@
         </svg>
       </span>
       <span class="upload-photo"
-        @click="curTab = 'photo'">
+        @click="curTab = curTab === 'photo' ? '' : 'photo'">
         <svg class="icon" aria-hidden="true" width="25px" height="25px">
           <use xlink:href="#icon-picture"></use>
         </svg>
-        <input type="file" multiple accept="image/*" name="photo" 
+        <!--<input type="file" multiple accept="image/*" name="photo" 
           ref="file"
-          @change="chooseFiles">
+          @change="chooseFiles">-->
       </span>
       <span class="fr">
         <svg class="icon" aria-hidden="true" width="25px" height="25px">
@@ -34,7 +37,7 @@
     </div>
     <transition name="emoji">
       <emoji v-if="curTab === 'emoji'"
-        @choose-exp="chooseExp"></emoji> 
+        @choose-exp="insertEmoji"></emoji> 
     </transition>
     <!--<upload-photo v-if="curTab === 'photo'" 
       :files="chosenFiles">
@@ -43,6 +46,7 @@
 </div>
 </template>
 <script>
+let imgIndex = 0
 import uploadPhoto from '@/components/uploadPhoto.vue'
 export default {
   components: {
@@ -53,7 +57,6 @@ export default {
       lastEditRange: undefined,
       curTab: '',
       // chooseExp: [],
-      chosenFiles: []
     }
   },
   methods: {
@@ -62,44 +65,33 @@ export default {
         ? ''
         : 'emoji'
     },
-    chooseFiles () {
-      let _files = this.$refs.file.files
-      // _files.forEach(file => {
-      for (let i = 0; i < _files.length; i++) {
-        let file = _files[i]
-        if (!this.isRepeated(file)) {
-          let _file = {
-            name: file.name,
-            size: file.size,
-            file
-          }
-          this.getBase64(file, _file)
-          this.chosenFiles.push(_file)
-        }
-      }
-      console.log(this.chosenFiles)
+    richtextClick () {
+      this.curTab = ''
     },
-    getBase64 (file, _file) {
-      let reader = new FileReader()
-      reader.addEventListener('load', (e) => {
-        // this.$set(_file, 'src', e.target.result)
-        this.$set(_file, 'src', reader.result)
-      }, false)
-      reader.readAsDataURL(file)
+    // rtClick (lastEditRange) {
+    //   this.lastEditRange = lastEditRange
+    // },
+    recordCursor (lastEditRange) {
+      // this.lastEditRange = lastEditRange
     },
-    isRepeated (file) {
-      return this.chosenFiles.some(item => item.name === file.name && item.size === file.size)
-    },
-    rtClick (lastEditRange) {
-      this.lastEditRange = lastEditRange
+    insertEmoji (exp) {
+      const richtextNode = this.$refs.richtext.$refs.richtext
+      // let selection = window.getSelection()
+      let _textNode = `[图片${imgIndex++}]`
+      richtextNode.setRangeText(_textNode)
+      richtextNode.selectionStart += _textNode.length;
+      this.$refs.richtext.handleChange(richtextNode.value)
+      // 阻止插入表情时弹出键盘
+      richtextNode.blur()
     },
     chooseExp (exp) {
-      const _richtext = this.$refs.richtext.$el,
+      const _richtext = this.$refs.richtext.$refs.richtext,
             _childrenLen = _richtext.childNodes.length;
 
       let selection = window.getSelection()
       let range;
       let img = document.createElement('img')
+      // let _textNode = document.createTextNode(`[图片]`)
       // img.src = `./static/img/emoji/weixin/${exp.class}.png`
       img.src = exp.path
       // img.style.width = img.style.height = `20px`
@@ -110,17 +102,18 @@ export default {
         selection.removeAllRanges()
         selection.addRange(this.lastEditRange)
       }
-
       if (selection.anchorNode) {
         range = selection.getRangeAt(0)
         range.deleteContents()
         range.insertNode(img)
+        // range.insertNode(_textNode)
         range = range.cloneRange()
       } else {
         // 创建新的光标对象
         range = document.createRange()
         // 光标对象的范围界定为新建的表情节点
         range.selectNodeContents(img)
+        // range.selectNodeContents(_textNode)
         // range.selectNodeContents(emojiText)
         // // 光标位置定位在表情节点的最大长度
         // range.setStart(emojiText, emojiText.length)
@@ -137,7 +130,8 @@ export default {
       // range.deleteContents()
       // range.insertNode(img)
       // range = range.cloneRange()
-      range.setStartAfter(img)
+      // range.setStartAfter(img)
+      range.setStartAfter(_textNode)
       range.collapse(true)
 
       selection.removeAllRanges()
@@ -166,20 +160,20 @@ export default {
 </script>
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 
-.upload-photo
-  position relative
-  display inline-block
-  width 25px
-  height 25px
-  overflow hidden
-  input 
-    position absolute
-    left 0
-    top 0
-    right 0
-    bottom 0
-    width 100%
-    height 100%
-    opacity 0
+// .upload-photo
+//   position relative
+//   display inline-block
+//   width 25px
+//   height 25px
+//   overflow hidden
+//   input 
+//     position absolute
+//     left 0
+//     top 0
+//     right 0
+//     bottom 0
+//     width 100%
+//     height 100%
+//     opacity 0
 
 </style>
