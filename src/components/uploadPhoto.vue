@@ -6,10 +6,10 @@
       @click="remove(file, idx)">×</a>
   </div>
   <a href="javascript:" class="upload">
-    <svg class="icon" aria-hidden="true" width="70px" height="70px">
-      <use xlink:href="#icon-picture"></use>
+    <svg class="icon" aria-hidden="true" width="50" height="50">
+      <use xlink:href="#icon-add"></use>
     </svg>
-    <input type="file" multiple accept="image/*" name="photo" 
+    <input type="file" multiple accept="image/*" name="photo"
       ref="file"
       @change="chooseFiles">
   </a>
@@ -69,7 +69,11 @@ export default {
   width 70px
   height 70px
   overflow hidden
-  input 
+  box-sizing border-box
+  border 1px solid #ccc
+  padding-top 9px
+  padding-left 9px
+  input
     position absolute
     left 0
     top 0
@@ -94,6 +98,9 @@ img
   display inline-block
   width 70px
   height 70px
+
+.icon
+  color #ccc
 </style>
 
 

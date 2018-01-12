@@ -1,8 +1,24 @@
 <template>
   <div class="topics-page">
+    <actionsheet v-model="showList" :menus="menus" @on-click-menu="getSelectedMenu"></actionsheet>
     <x-header :title="place"
       :left-options="{preventGoBack: true}"
-      @on-click-back="gotoHome"></x-header>
+      @on-click-back="gotoHome">
+      <div slot="right" class="text-right">
+        <a href="javascript:" class="collect"
+          @click="">
+          <svg class="icon" aria-hidden="true" width="25" height="25">
+            <use xlink:href="#icon-collect"></use>
+          </svg>
+        </a>
+        <a href="javascript:" class="list"
+          @click="showList=true">
+          <svg class="icon" aria-hidden="true" width="25" height="25">
+            <use xlink:href="#icon-list"></use>
+          </svg>
+        </a>
+      </div>
+    </x-header>
     <!--<tab>
       <tab-item v-for="t in tabs">{{t.name}}</tab-item>
       <tab-item disabled>
@@ -14,11 +30,12 @@
       </tab-item>
     </tab>-->
     <div class="topic-titles">
-      <router-link :to="{name: 'Publish'}">
-        <svg class="icon fr more-title" aria-hidden="true" width="20" height="20" >
-          <use xlink:href="#icon-fangwu"></use>
+      <a href="javascript:"
+        @click="showList=true">
+        <svg class="icon fr more-title" aria-hidden="true" width="25" height="25" >
+          <use xlink:href="#icon-iconzzjgbig"></use>
         </svg>
-      </router-link>
+      </a>
       <div class="scroll-titles" ref="titles">
         <ul class="cf" :style="{width: scrollWidth}">
           <li class="title"
@@ -88,7 +105,7 @@
     </div>
     <div class="footer text-right">
       <a href="javascript:" class="refresh pt10" style="height:40px; "
-        @click="">
+        @click="refresh">
         <svg class="icon" aria-hidden="true" width="30" height="30" >
           <use xlink:href="#icon-refresh"></use>
         </svg>
@@ -105,7 +122,7 @@
 
 <script>
 
-  import { mapMutations } from 'vuex'
+import { Actionsheet } from 'vux'
 
   import $ from 'jquery'
   // import 'static/css/iconfont/iconfont'
@@ -120,6 +137,12 @@
     {name: '深井冰'},
     {name: '求偶'}
   ]
+
+  const menus = {
+    menu1: '北京烤鸭',
+    menu2: '陕西油泼面',
+    menu3: '西安肉夹馍'
+  }
 
   let topics = [
     {title: '水管漏水了', content: '水管漏水了2333333'},
@@ -150,6 +173,8 @@
         place: '中环广场',
         topics: [],
         tabs: [],
+        menus: menus,
+        showList: false,
         topics: topics,
         // topics: [],
         bsConf: {
@@ -208,42 +233,30 @@
         let wrapperDom = document.querySelector('.scroll-titles')
         let titlesDom = document.querySelectorAll('.title')
         wrapperDom.addEventListener('tap', e => {
-          // debugger
           this.onNavTap(e)
         }, false)
 
       })
     },
     methods: {
-      ...mapMutations([
-        'RECORD_ENTRANCE_PAGE',
-        'CHANGE_PAGE_SWITCH_METHOD',
-        'RECORD_PAGE_SWITCH_ROUTE'
-      ]),
+      refresh () {
+        // TODO: 页面重载or重新请求部分接口数据？
+        window.location.reload()
+      },
+      getMore () {
+
+      },
+      getSelectedMenu (key, item) {
+        console.log(key)
+        console.log(item)
+        this.$vux.toast.text(item, 'middle')
+        // this.$vux.toast.text(item)
+      },
       gotoHome () {
-        this.RECORD_PAGE_SWITCH_ROUTE({
-          to: 'Home',
-          from: 'Place'
-        })
         this.$router.push({name: 'Home'})
-        // this.CHANGE_PAGE_SWITCH_METHOD(false)
-        // this.$nextTick(() => {
-        //   this.CHANGE_PAGE_SWITCH_METHOD(true)
-        // })
       },
       gotoTopic (e, topic) {
-        this.RECORD_PAGE_SWITCH_ROUTE({
-          to: 'Topic',
-          from: 'Place'
-        })
-        this.RECORD_ENTRANCE_PAGE({
-          name: 'Topic',
-          id: this.$route.params.id
-        })
         this.$router.push({name: 'Topic', query: {page: 1}})
-        // this.$router.push({
-        //   path: `/topic?page=1`
-        // })
       },
       onClick (e, item, idx) {
         console.log(e)
@@ -326,6 +339,9 @@
           }
         }, 2000)
       }
+    },
+    components: {
+      actionsheet: Actionsheet
     }
   }
 </script>

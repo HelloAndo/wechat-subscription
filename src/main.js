@@ -8,6 +8,9 @@ import App from './App'
 
 import { get } from 'lodash'
 
+import  { ToastPlugin } from 'vux'
+Vue.use(ToastPlugin, {position: 'top'})
+
 import './globalComponents'
 import '@/css/normalize.css'
 import '@/css/public.css'
@@ -28,10 +31,7 @@ Vue.config.productionTip = false
 import Page from './store/modules/page'
 router.beforeEach((to, from, next) => {
   console.log(Page.state.fromPage)
-  store.commit('RECORD_PAGE_SWITCH_ROUTE', {
-    to: to.name,
-    from: from.name
-  })
+  store.commit('RECORD_PAGE_SWITCH_ROUTE', { to, from })
   next()
 })
 

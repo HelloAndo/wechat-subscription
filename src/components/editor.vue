@@ -9,7 +9,7 @@
     <!--<b>我是b</b><i>我是i</i>-->
   </richtext>
   <div class="input-toolbar-wrapper">
-    <!--<upload-photo v-if="chosenFiles.length" 
+    <!--<upload-photo v-if="chosenFiles.length"
       :files="chosenFiles">
     </upload-photo>-->
     <upload-photo v-show="curTab === 'photo'"></upload-photo>
@@ -25,21 +25,23 @@
         <svg class="icon" aria-hidden="true" width="25px" height="25px">
           <use xlink:href="#icon-picture"></use>
         </svg>
-        <!--<input type="file" multiple accept="image/*" name="photo" 
+        <!--<input type="file" multiple accept="image/*" name="photo"
           ref="file"
           @change="chooseFiles">-->
       </span>
-      <span class="fr">
+      <span class="fr anonymous"
+        :class="{open: openAnonymous}"
+        @click="openAnonymous=!openAnonymous">
         <svg class="icon" aria-hidden="true" width="25px" height="25px">
-          <use xlink:href="#icon-anonymous-close"></use>
+          <use xlink:href="#icon-nimingshuo"></use>
         </svg>
       </span>
     </div>
     <transition name="emoji">
       <emoji v-if="curTab === 'emoji'"
-        @choose-exp="insertEmoji"></emoji> 
+        @choose-exp="insertEmoji"></emoji>
     </transition>
-    <!--<upload-photo v-if="curTab === 'photo'" 
+    <!--<upload-photo v-if="curTab === 'photo'"
       :files="chosenFiles">
     </upload-photo>-->
   </div>
@@ -56,6 +58,7 @@ export default {
     return {
       lastEditRange: undefined,
       curTab: '',
+      openAnonymous: false
       // chooseExp: [],
     }
   },
@@ -159,6 +162,9 @@ export default {
 }
 </script>
 <style lang="stylus" rel="stylesheet/stylus" scoped>
+.anonymous.open
+  color #e2bd7f
+
 
 // .upload-photo
 //   position relative
@@ -166,7 +172,7 @@ export default {
 //   width 25px
 //   height 25px
 //   overflow hidden
-//   input 
+//   input
 //     position absolute
 //     left 0
 //     top 0

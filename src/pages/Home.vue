@@ -8,7 +8,7 @@
       :auto-fixed="false"></search>
     <div>
       <grid :cols="2">
-        <grid-item v-for="b in buildings" :key="b.class">
+        <grid-item v-for="b in buildings" :key="b.id">
           <a href="javascript:" @click="gotoPlace(b)">
             <div class="grid-center text-center">
               <svg class="icon" aria-hidden="true" width="120" height="120">
@@ -61,42 +61,42 @@ export default {
           class: 'icon-dalou1'
         },
         {
-          id: 6,
+          id: 7,
           name: '步步高豪庭',
           class: 'icon-dalou1'
         },
         {
-          id: 6,
+          id: 8,
           name: '步步高豪庭',
           class: 'icon-dalou1'
         },
         {
-          id: 6,
+          id: 9,
           name: '步步高豪庭',
           class: 'icon-dalou1'
         },
         {
-          id: 6,
+          id: 10,
           name: '步步高豪庭',
           class: 'icon-dalou1'
         },
         {
-          id: 6,
+          id: 11,
           name: '步步高豪庭',
           class: 'icon-dalou1'
         },
         {
-          id: 6,
+          id: 12,
           name: '步步高豪庭',
           class: 'icon-dalou1'
         },
         {
-          id: 6,
+          id: 13,
           name: '步步高豪庭',
           class: 'icon-dalou1'
         },
         {
-          id: 6,
+          id: 14,
           name: '步步高豪庭',
           class: 'icon-dalou1'
         }
@@ -105,8 +105,6 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'RECORD_ENTRANCE_PAGE',
-      'CHANGE_PAGE_SWITCH_METHOD',
       'RECORD_PAGE_SWITCH_ROUTE'
     ]),
     gotoPlace (item) {

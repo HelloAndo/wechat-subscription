@@ -4,7 +4,7 @@
     :left-options="{showBack: true, preventGoBack: true}"
     @on-click-back="$router.push({name: 'Place', params: {id: pageID}})"></x-header>
   <div class="bscroll-wrapper">
-    <scroll ref="scroll" 
+    <scroll ref="scroll"
       scrollbar=true
       :tap="true">
       <div class="bd">
@@ -19,24 +19,24 @@
     <a href="javascript:" class="prev"
       v-show="page>1"
       @click="gotoPrev">
-      <svg class="icon" aria-hidden="true" width="50" height="50" >
-        <use xlink:href="#icon-left"></use>
+      <svg class="icon" aria-hidden="true" width="40" height="40" >
+        <use xlink:href="#icon-prev"></use>
       </svg>
     </a>
     <a href="javascript:" class="next"
       v-show="page<totalPage"
       @click="gotoNext">
-      <svg class="icon" aria-hidden="true" width="50" height="50" >
-        <use xlink:href="#icon-right"></use>
+      <svg class="icon" aria-hidden="true" width="40" height="40" >
+        <use xlink:href="#icon-next"></use>
       </svg>
     </a>
     <a href="javascript:" class="page"
       @click="showPagination=true">
       <span>{{page}}/{{totalPage}}</span>
     </a>
-    <a href="javascript:" class="publish pt10" style="height:40px; "
+    <a href="javascript:" class="publish pt10"
       @click="$router.push({name: 'Publish'})">
-      <svg class="icon" aria-hidden="true" width="30" height="30" style="color:#e2bd7f">
+      <svg class="icon" aria-hidden="true" width="30" height="30">
         <use xlink:href="#icon-publish"></use>
       </svg>
     </a>
@@ -57,6 +57,9 @@
 <script>
 import { cloneDeep } from 'lodash'
 import api from 'service/api'
+
+import { mapState } from 'vuex'
+
 export default {
   props: {
   },
@@ -77,7 +80,7 @@ export default {
       if ( e.path.some((dom, i) => {
         // if (i ==10) debugger
         return me.$get(dom, 'tagName') && ~me.$get(dom, 'className').toString().indexOf('btn-reply')
-        }) 
+        })
       ) {
         this.$router.push({name: 'Reply'})
       }
@@ -121,9 +124,12 @@ export default {
     }
   },
   computed: {
-    pageID () {
-      return this.$store.state.page.entrancePage.id
-    }
+    ...mapState({
+      // pageID: state => state.page.entrancePage.params.id || 1
+      pageID (state) {
+        return this.$get(state.page, 'entrancePage.params.id', 1)
+      }
+    })
   }
 }
 </script>

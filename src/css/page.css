@@ -4,13 +4,13 @@ html, body, #app, .topics-page, .bs-wrapper, .topic-page, .bs-wrapper{height: 10
 .topics-page{position: relative;}
 
 .more-title{margin: 10px 10px 0 0;}
-.scroll-titles{position: relative; overflow: hidden; margin-right: 40px; 
+.scroll-titles{position: relative; overflow: hidden; margin-right: 40px;
   /* box-shadow: -2px 0 4px rgba(0,0,0,.1) inset; */
 }
 .scroll-titles ul{width: 150%;}
 .scroll-titles li{border-bottom: 3px solid transparent;}
 .scroll-titles li.active{border-bottom-color: #f00;}
-.title-bar{position: absolute; bottom: 0; left: 0; width: 50px; height: 3px; background-color: #f00; 
+.title-bar{position: absolute; bottom: 0; left: 0; width: 50px; height: 3px; background-color: #f00;
   transition: right 0.3s cubic-bezier(0.35, 0, 0.25, 1) 0.09s, left 0.3s cubic-bezier(0.35, 0, 0.25, 1);
 }
 /* .scroll-titles ul{width: 100%;} */
@@ -26,11 +26,15 @@ html, body, #app, .topics-page, .bs-wrapper, .topic-page, .bs-wrapper{height: 10
 .pulldown-wrapper .before-pulldown{text-align: center;}
 
 .footer{position: absolute; bottom: 0; left: 0; right: 0;}
-.footer>a{box-sizing: content-box; display: inline-block; text-align: center; vertical-align: middle; background-color: rgba(0,0,0,.2); width: 50px; height: 50px; border-radius: 50%; margin: 10px 5px;}
+.footer>a{box-sizing: content-box; display: inline-block; text-align: center; vertical-align: middle; background-color: rgba(0,0,0,.8); width: 50px; height: 50px; border-radius: 50%; margin: 10px 5px;}
 .footer .page{width: 100px; border-radius: 30px;}
-.footer .page span{font-size: 25px; color: #e2bd7f;}
+.footer .page span{display: inline-block; font-size: 25px; color: #e2bd7f; line-height: 50px;}
 
-.footer .icon{color: #e2bd7f;}
+.footer .prev{height: 44px; padding-top: 6px;}
+.footer .next{height: 44px; padding-top: 6px;}
+.footer .publish{height: 40px; }
+
+/*.footer .icon{color: #e2bd7f;}*/
 
 /* 话题详情页面 */
 .topic-page .bscroll-wrapper{margin-top: 46px;}
@@ -133,5 +137,3 @@ html, body, #app, .topics-page, .bs-wrapper, .topic-page, .bs-wrapper{height: 10
 /* 发布话题页面 */
 .publish-page .weui-cells{background-color: #fbf9fe;}
 
-
-.icon{color: #f00}

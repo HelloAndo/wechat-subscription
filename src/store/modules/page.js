@@ -1,19 +1,15 @@
 // import shop from '../../api/shop'
 
-// import { filter, map } from 'lodash'
-import filter from 'lodash/filter'
-import map from 'lodash/map'
+import { filter, map } from 'lodash'
+// import filter from 'lodash/filter'
+// import map from 'lodash/map'
 // import _ from 'lodash'
 import * as types from '../mutation-types'
 import { routes } from '../../router/routes'
 
 // initial state
 const state = {
-  entrancePage: {
-    name: '',
-    id: undefined
-  },
-  // isForward: true,
+  entrancePage: {},
   fromPage: '',
   toPage: ''
 }
@@ -38,13 +34,13 @@ const mutations = {
   [types.RECORD_ENTRANCE_PAGE] (state, data) {
     state.entrancePage = { ...data }
   },
-  [types.CHANGE_PAGE_SWITCH_METHOD] (state, bool) {
-    state.isForward = bool
-  },
   [types.RECORD_PAGE_SWITCH_ROUTE] (state, { to, from }) {
-  // [types.RECORD_PAGE_SWITCH_ROUTE] (state, obj) {
-    state.toPage = to
-    state.fromPage = from
+    state.toPage = to.name
+    state.fromPage = from.name
+    // 记录Place版块信息便于Topic页面返回时返回到指定版块
+    to.name === 'Topic'
+      && from.name === 'Place'
+      && this.commit('RECORD_ENTRANCE_PAGE', from)
   }
 }
 

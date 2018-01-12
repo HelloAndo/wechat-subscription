@@ -96,3 +96,6 @@ li{list-style: none;}
 }
 
 .vux-header .vux-header-left{top: 9px;}
+
+.icon{fill: currentColor; color: #000;}
+.vux-header .icon, .footer .icon, .topic-titles .icon{color: #e2bd7f;}

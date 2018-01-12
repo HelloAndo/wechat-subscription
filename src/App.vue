@@ -12,15 +12,9 @@ import { mapState, mapGetters } from 'vuex'
 export default {
   name: 'app',
   computed: {
-    // ...mapState({
-    //   isForward: state => state.page.isForward
-    // })
     ...mapGetters([
       'isForward'
     ])
-    // isForward () {
-    //   return this.$store.state.page.isForward
-    // }
   }
 }
 </script>
