@@ -6,18 +6,16 @@
         @scroll-end="onScrollEnd">
         <!--<ul class="cf"
           :style="expUlStyle">-->
-          <div class="slide-item cf " v-for="(page, pageIndex) in qqExp" :style="expLiStyle">
-            <div class="flex-parent" v-for="i in 3">
-              <a class="emoji" 
-                href="javascript:"
-                v-for="(icon, index) in page"
-                :class="icon.class"
-                :style="{width: icon.style.width, height: icon.style.height}"
-                @click="clickExp(icon)"
-                >
-                <i :style="{'background': icon.style.background, 'background-size': icon.style.backgroundSize}"></i>
-              </a>
-            </div>
+          <div class="slide-item cf " v-for="page in qqExp" :style="expLiStyle">
+            <a class="emoji" 
+              href="javascript:"
+              v-for="icon in page"
+              :class="icon.class"
+              :style="{width: icon.style.width, height: icon.style.height}"
+              @click="clickExp(icon)"
+              >
+              <i :style="{'background': icon.style.background, 'background-size': icon.style.backgroundSize}"></i>
+            </a>
           </div>
           <div class="slide-item cf " v-for="page in emojiExp" :style="expLiStyle">
             <a class="emoji" 
@@ -47,9 +45,8 @@
 </div>
 </template>
 <script>
-// const EXP_PIC_
-const EXP_ROW_NUM = 3     // 一页显示表情的行数
-const EXP_COL_NUM = 7     // 一页显示表情的列数
+const EXP_ROW_NUM = 3
+const EXP_COL_NUM = 8
 const EXP_NUM_ONE_PAGE = EXP_ROW_NUM * EXP_COL_NUM
 
 // const EXP_ARRAY = [
@@ -134,12 +131,6 @@ export default {
       console.log(exp)
       this.$emit('choose-exp', exp)
     },
-    /**
-    * 初始化表情
-      @param total [Number] 某类表情包的表情数量
-      @param obj [Object] 某类表情包的存储数组
-      @param type [String] 某类表情包类型
-    */
     initExpData (total, obj, type) {
       var pageNum = 0
       var _completePageNum = Math.floor(total / EXP_ROW_NUM / EXP_COL_NUM)

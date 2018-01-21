@@ -4,9 +4,11 @@
       <slot>
       </slot>
     </div>
-    <div v-if="showDot" class="dots">
-      <span class="dot" :class="{active: currentPageIndex === index }" v-for="(item, index) in dots"></span>
-    </div>
+    <slot name="dots">
+      <div v-if="showDot" class="dots">
+        <span class="dot" :class="{active: currentPageIndex === index }" v-for="(item, index) in dots"></span>
+      </div>
+    </slot>
   </div>
 </template>
 
