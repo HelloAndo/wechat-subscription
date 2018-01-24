@@ -7,10 +7,10 @@
         <!--<ul class="cf"
           :style="expUlStyle">-->
           <div class="slide-item cf " v-for="(page, pageIndex) in qqExp" :style="expLiStyle">
-            <div class="flex-parent" v-for="i in 3">
+            <div class="flex-parent" v-for="item in page">
               <a class="emoji" 
                 href="javascript:"
-                v-for="(icon, index) in page"
+                v-for="(icon, index) in item"
                 :class="icon.class"
                 :style="{width: icon.style.width, height: icon.style.height}"
                 @click="clickExp(icon)"
@@ -19,7 +19,7 @@
               </a>
             </div>
           </div>
-          <div class="slide-item cf " v-for="page in emojiExp" :style="expLiStyle">
+          <div class="slide-item cf " v-for="page in emoji" :style="expLiStyle">
             <a class="emoji" 
               href="javascript:"
               v-for="icon in page"
@@ -47,48 +47,72 @@
 </div>
 </template>
 <script>
+
+import { cloneDeep } from 'lodash'
 // const EXP_PIC_
 const EXP_ROW_NUM = 3     // 一页显示表情的行数
 const EXP_COL_NUM = 7     // 一页显示表情的列数
 const EXP_NUM_ONE_PAGE = EXP_ROW_NUM * EXP_COL_NUM
 
-// const EXP_ARRAY = [
-//   {
-//     type: 'qq',
-//     total: 105
-//   },
-//   {
-//     type: 'emoji',
-//     total: 99
-//   }
-// ]
+// 初始化表情数据入口，新增/删减在此设置
+const EXPRESSION = [
+  {
+    type: 'qq',
+    // total: 105
+    total: 50
+  },
+  {
+    type: 'emoji',
+    total: 99
+  }
+]
+let EXPRESSION_OBJECT = {
+  'aExp': EXPRESSION
+}
+let EXPRESSION_COMPUTED = {}
+EXPRESSION.forEach((item) => {
+  EXPRESSION_OBJECT[item.type] = []
+  // EXPRESSION_COMPUTED[`${item.type}Exp`] = () => {
+  //   let arr = []
+  //   let qq = cloneDeep(this.qq)
+  //   qq.forEach((item, idx) => {
+  //     let i = 0
+  //     arr[idx] = []
+  //     while (item.length) {
+  //       arr[idx][i++] = item.splice(0, 7)
+  //     }
+  //   })
+  //   return arr
+  // }
+})
 
 export default {
   data () {
-    return {
+    // return {
+    return Object.assign(EXPRESSION_OBJECT, {
       expUlStyle: '',
       expLiStyle: '',
       winW: undefined,
-      qqExp: [],
-      emojiExp: [],
       curPage: 0,
       currentPageIndex: 0,
       aExpPageNum: [],         // 每种表情的页数数组
-      aExp: [
-        {
-          type: 'qq',
-          // total: 105
-          total: 50
-        },
-        {
-          type: 'emoji',
-          total: 99
-        }
-      ],
       dots: []
-    }
+    })
   },
+  // computed: object.assign({}, {
   computed: {
+    qqExp () {
+      let arr = []
+      let qq = cloneDeep(this.qq)
+      qq.forEach((item, idx) => {
+        let i = 0
+        arr[idx] = []
+        while (item.length) {
+          arr[idx][i++] = item.splice(0, 7)
+        }
+      })
+      return arr
+    },
     activeTab () {
       let _pageSum = 0
       for (let i = 0; i < this.aExpPageNum.length; i++) {
@@ -107,7 +131,7 @@ export default {
       this.setDots(num, 0)
     },
     setDots (tabIndex, pageIndex) {
-      this.dots = new Array(this[`${this.aExp[tabIndex].type}Exp`].length)
+      this.dots = new Array(this[`${this.aExp[tabIndex].type}`].length)
       this.currentPageIndex = this.curPage - pageIndex
     },
     onScrollEnd (page) {
@@ -188,12 +212,13 @@ export default {
       }
 
       this.aExp.forEach(item => {
-        let _pageNum = this.initExpData(item.total, this[`${item.type}Exp`], item.type)
+        // debugger
+        let _pageNum = this.initExpData(item.total, this[item.type], item.type)
         this.aExpPageNum.push(_pageNum)
       })
 
       // 第一屏表情的页码数
-      this.dots = new Array(this.qqExp.length)
+      this.dots = new Array(this[EXPRESSION[0].type].length)
 
       let _sum = this.aExpPageNum.reduce((sum, val) => sum + val, 0)
 
