@@ -16,7 +16,7 @@ export const routes = [
     zindex: 0
   },
   {
-    path: '/place/:id',
+    path: '/place/:name',
     name: 'Place',
     component: Place,
     zindex: 1

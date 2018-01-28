@@ -11,7 +11,8 @@ import { routes } from '../../router/routes'
 const state = {
   entrancePage: {},
   fromPage: '',
-  toPage: ''
+  toPage: '',
+  iosTapBack: false
 }
 
 // getters
@@ -41,6 +42,9 @@ const mutations = {
     to.name === 'Topic'
       && from.name === 'Place'
       && this.commit('RECORD_ENTRANCE_PAGE', from)
+  },
+  [types.IOS_TAP_BACK] (state, data) {
+    state.iosTapBack = data
   }
 }
 

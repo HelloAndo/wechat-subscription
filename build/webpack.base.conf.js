@@ -28,7 +28,10 @@ let webpackConfig = {
       '@': resolve('src'),
       'static': resolve('static'),
       'service': resolve('src/service'),
-      'common': resolve('src/common')
+      'common': resolve('src/common'),
+      'tool': resolve('src/tool'),
+      'data': resolve('src/data'),
+      'response': resolve('src/response')
     }
   },
   module: {

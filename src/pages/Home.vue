@@ -24,83 +24,13 @@
 </template>
 
 <script>
+import { BUILDINGS } from 'data'
 import { mapMutations } from 'vuex'
 export default {
   data () {
     return {
       city: '广州',
-      buildings: [
-        {
-          id: 1,
-          name: '东方豪园',
-          class: 'icon-fangchan-'
-        },
-        {
-          id: 2,
-          name: '中环广场',
-          class: 'icon-cctv-headquarters'
-        },
-        {
-          id: 3,
-          name: '东方名城',
-          class: 'icon-dalou'
-        },
-        {
-          id: 4,
-          name: '时代广场',
-          class: 'icon-loupan'
-        },
-        {
-          id: 5,
-          name: '碧桂园',
-          class: 'icon-xiezilou'
-        },
-        {
-          id: 6,
-          name: '步步高豪庭',
-          class: 'icon-dalou1'
-        },
-        {
-          id: 7,
-          name: '步步高豪庭',
-          class: 'icon-dalou1'
-        },
-        {
-          id: 8,
-          name: '步步高豪庭',
-          class: 'icon-dalou1'
-        },
-        {
-          id: 9,
-          name: '步步高豪庭',
-          class: 'icon-dalou1'
-        },
-        {
-          id: 10,
-          name: '步步高豪庭',
-          class: 'icon-dalou1'
-        },
-        {
-          id: 11,
-          name: '步步高豪庭',
-          class: 'icon-dalou1'
-        },
-        {
-          id: 12,
-          name: '步步高豪庭',
-          class: 'icon-dalou1'
-        },
-        {
-          id: 13,
-          name: '步步高豪庭',
-          class: 'icon-dalou1'
-        },
-        {
-          id: 14,
-          name: '步步高豪庭',
-          class: 'icon-dalou1'
-        }
-      ]
+      buildings: BUILDINGS
     }
   },
   methods: {
@@ -114,7 +44,7 @@ export default {
       })
       this.$router.push({
         name: 'Place',
-        params: {id: item.id}
+        params: {name: item.en}
       })
     }
   }

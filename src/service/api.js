@@ -4,6 +4,12 @@ import axios from 'axios'
 axios.defaults.baseURL = '/api';
 
 import { resolve } from 'path';
+
+import { cloneDeep } from 'lodash'
+
+import { topics } from 'response'
+import { setTimeout } from 'timers';
+
 export default {
   get (url) {
     return new Promise((resolve, reject) => {
@@ -39,7 +45,7 @@ export default {
             identity: '游客',
             rank: '三级',
             posts: 333,
-          content: '楼主说什么都是对的楼主说什么都是对的楼主说什么都是对的楼主说什么都是对的楼主说什么都是对的楼主说什么都是对的楼主说什么都是对的楼主说什么都是对的楼主说什么都是对的'
+          content: '楼主[奸笑]说什[哈欠]么都是对的楼主说什么都是对的楼主说什[便便]么都是对的楼主说[微笑]分[右太极]什么都[星星]是对的楼主说什么都是对的楼主说[鲸鱼]什么都是对[O]的楼主说什么都是对的楼主说什么都是对的楼主说什么都[成交]是[灯泡][CD]对的'
         },
         {
             name: '三三',
@@ -62,32 +68,12 @@ export default {
   },
 
   getTopics () {
-    return this.get('/topics')
-    // return Promise.resolve([
-    //   {
-    //     author: '三三',
-    //     release_time: '2015-03-03',
-    //     title: '我是三三',
-    //     content: '我是三三我怕谁',
-    //     comments: [
-    //       {
-    //         replier: '欢欢',
-    //         content: '呵呵'
-    //       }
-    //     ]
-    //   },
-    //   {
-    //     author: '三三',
-    //     release_time: '2015-03-03',
-    //     title: '我是三三',
-    //     content: '我是三三我怕谁',
-    //     comments: [
-    //       {
-    //         replier: '欢欢',
-    //         content: '呵呵'
-    //       }
-    //     ]
-    //   }
-    // ])
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          data: cloneDeep(topics)
+        })
+      }, 1000)
+    })
   }
 }

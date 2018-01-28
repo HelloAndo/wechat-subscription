@@ -6,28 +6,26 @@
         @scroll-end="onScrollEnd">
         <!--<ul class="cf"
           :style="expUlStyle">-->
-          <div class="slide-item cf " v-for="(page, pageIndex) in qqExp" :style="expLiStyle">
-            <div class="flex-parent" v-for="item in page">
-              <a class="emoji" 
-                href="javascript:"
-                v-for="(icon, index) in item"
-                :class="icon.class"
-                :style="{width: icon.style.width, height: icon.style.height}"
-                @click="clickExp(icon)"
-                >
-                <i :style="{'background': icon.style.background, 'background-size': icon.style.backgroundSize}"></i>
-              </a>
-            </div>
+          <div class="slide-item cf qq-wrap" v-for="(page, pageIndex) in qq" :style="expLiStyle">
+            <a class="emoji" 
+              href="javascript:"
+              v-for="(icon, index) in page"
+              :class="icon.class"
+              :style="{width: icon.style.width}"
+              @click="clickExp(icon)"
+              >
+              <i :style="{backgroundPosition: icon.style.backgroundPosition, backgroundImage: icon.style.backgroundImage}"></i>
+            </a>
           </div>
-          <div class="slide-item cf " v-for="page in emoji" :style="expLiStyle">
+          <div class="slide-item cf emoji-wrap" v-for="page in emoji" :style="expLiStyle">
             <a class="emoji" 
               href="javascript:"
               v-for="icon in page"
               :class="icon.class"
-              :style="{width: icon.style.width, height: icon.style.height}"
+              :style="{width: icon.style.width}"
               @click="clickExp(icon)"
               >
-              <i :style="{'background': icon.style.background, 'background-size': icon.style.backgroundSize}"></i>
+              <i :style="{backgroundPosition: icon.style.backgroundPosition, backgroundImage: icon.style.backgroundImage}"></i>
             </a>
           </div>
           <div class="dots" slot="dots">
@@ -49,41 +47,35 @@
 <script>
 
 import { cloneDeep } from 'lodash'
+
+import { expMeanning, EXP_COL_NUM_IN_SPRITE, EXP_SIZE_IN_SPRITE } from 'data'
+
 // const EXP_PIC_
 const EXP_ROW_NUM = 3     // 一页显示表情的行数
 const EXP_COL_NUM = 7     // 一页显示表情的列数
 const EXP_NUM_ONE_PAGE = EXP_ROW_NUM * EXP_COL_NUM
 
+// 表情雪碧图一行的表情数量
+// const EXP_COL_NUM_IN_SPRITE = 15
+// const EXP_SIZE_IN_SPRITE = 32
+
 // 初始化表情数据入口，新增/删减在此设置
 const EXPRESSION = [
   {
     type: 'qq',
-    // total: 105
-    total: 50
+    total: 105
+    // total: 50
   },
   {
     type: 'emoji',
-    total: 99
+    total: 177
   }
 ]
 let EXPRESSION_OBJECT = {
   'aExp': EXPRESSION
 }
-let EXPRESSION_COMPUTED = {}
 EXPRESSION.forEach((item) => {
   EXPRESSION_OBJECT[item.type] = []
-  // EXPRESSION_COMPUTED[`${item.type}Exp`] = () => {
-  //   let arr = []
-  //   let qq = cloneDeep(this.qq)
-  //   qq.forEach((item, idx) => {
-  //     let i = 0
-  //     arr[idx] = []
-  //     while (item.length) {
-  //       arr[idx][i++] = item.splice(0, 7)
-  //     }
-  //   })
-  //   return arr
-  // }
 })
 
 export default {
@@ -155,8 +147,9 @@ export default {
 
     },
     clickExp (exp) {
-      console.log(exp)
-      this.$emit('choose-exp', exp)
+      let _type = exp.class.split('-')[0]
+      let _idx = exp.class.split('-')[1]
+      this.$emit('choose-exp', exp, expMeanning[_type][_idx])
     },
     /**
     * 初始化表情
@@ -179,25 +172,22 @@ export default {
 
       obj.forEach((page, idx) => {
         for (let i = 0; i < EXP_NUM_ONE_PAGE; i++) {
-          let pos = {
-            // left: i % EXP_PIC_ROW_NUM,
-            // top: Math.floor(i / EXP_PIC_ROW_NUM)
-            left: i % EXP_COL_NUM,
-            top: Math.floor(i / EXP_COL_NUM)
-          }
+          let _rankIndex = EXP_NUM_ONE_PAGE * idx + i    // 在该类表情中的排位
+
+          let _integer = Math.floor(_rankIndex / EXP_COL_NUM_IN_SPRITE)
+          let _remainder = _rankIndex % EXP_COL_NUM_IN_SPRITE
+
+          let _topOffset = _integer * EXP_SIZE_IN_SPRITE
+          let _leftOffset = _remainder * EXP_SIZE_IN_SPRITE
+
           page[i] = {
-            path: `./static/img/emoji/${type}/${type}${1+ idx * EXP_NUM_ONE_PAGE + pos.top * EXP_COL_NUM + pos.left}.png`,
             style: {
               width: `${this.winW / EXP_COL_NUM}px`,
-              height: `${this.winW / EXP_COL_NUM}px`,
-              // background: `url('/static/img/emoji/weixin/fuck${1+ idx * EXP_NUM_ONE_PAGE + pos.top * EXP_PIC_ROW_NUM + pos.left}.png') 0 0 no-repeat`,
-
-              // 为了build后的引用路径，暂时改成相对路径
-              background: `url('./static/img/emoji/${type}/${type}${1+ idx * EXP_NUM_ONE_PAGE + pos.top * EXP_COL_NUM + pos.left}.png') 0 0 no-repeat`,
-              backgroundSize: 'contain'
+              backgroundPosition: `-${_leftOffset}px -${_topOffset}px`,
+              // [调试用]为了build后的引用路径，暂时改成相对路径
+              backgroundImage: `url('./static/img/${type}.png')`,
             },
-            // class: `fuck${1+ idx * EXP_NUM_ONE_PAGE + pos.top * EXP_PIC_ROW_NUM + pos.left}`
-            class: `${type}${1+ idx * EXP_NUM_ONE_PAGE + pos.top * EXP_COL_NUM + pos.left}`
+            class: `${type}-${_rankIndex}`
           }
         }
       })

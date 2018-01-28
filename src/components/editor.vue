@@ -77,10 +77,11 @@ export default {
     recordCursor (lastEditRange) {
       // this.lastEditRange = lastEditRange
     },
-    insertEmoji (exp) {
+    insertEmoji (exp, meanning) {
       const richtextNode = this.$refs.richtext.$refs.richtext
       // let selection = window.getSelection()
-      let _textNode = `[图片${imgIndex++}]`
+      // let _textNode = `[图片${imgIndex++}]`
+      let _textNode = `[${meanning}]`
       richtextNode.setRangeText(_textNode)
       richtextNode.selectionStart += _textNode.length;
       this.$refs.richtext.handleChange(richtextNode.value)

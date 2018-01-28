@@ -37,10 +37,11 @@
         </svg>
       </a>
       <div class="scroll-titles" ref="titles">
-        <ul class="cf" :style="{width: scrollWidth}">
-          <li class="title"
-            :class="{active: i===activeNavIndex}"
-            v-for="(t,i) in tabs">{{t.name}}</li>
+        <ul class="" :style="{width: scrollWidth}">
+          <li class="title" ref="lis"
+            v-for="(t,i) in tabs" 
+            :class="{active: t.name==activeTab.name}"
+            @click="demo">{{t.name}}</li>
         </ul>
         <!--<div class="title-bar" :class="titleBarClass" :style="titleBarStyle"></div><-->
       </div>
@@ -123,6 +124,9 @@
 <script>
 
 import { Actionsheet } from 'vux'
+import { find, map, filter } from 'lodash'
+
+import { BUILDINGS } from 'data'
 
   import $ from 'jquery'
   // import 'static/css/iconfont/iconfont'
@@ -130,12 +134,12 @@ import { Actionsheet } from 'vux'
   import api from '../service/api'
 
   let tabs = [
-    {name: '置顶'},
-    {name: '热帖'},
-    {name: '精华'},
-    {name: '业主加群比较长比较长比较长'},
-    {name: '深井冰'},
-    {name: '求偶'}
+    {name: '置顶', en: 'top'},
+    {name: '热帖', en: 'hot'},
+    {name: '精华', en: 'Essence'},
+    {name: '业主加群比较长比较长比较长', en: 'long'},
+    {name: '深井冰', en: 'sjb'},
+    {name: '求偶', en: 'qo'}
   ]
 
   const menus = {
@@ -164,19 +168,21 @@ import { Actionsheet } from 'vux'
   ]
 
   export default {
+    props: {
+
+    },
     data () {
       return {
         beforePullDown: true,
         bubbleY: 0,
         isPullingDown: false,
         isPullUpLoad: false,
-        place: '中环广场',
         topics: [],
-        tabs: [],
+        tabs: tabs,
+        activeTab: tabs[0],
         menus: menus,
         showList: false,
-        topics: topics,
-        // topics: [],
+        // topics: topics,
         bsConf: {
           probeType: 3,
           click: true,
@@ -208,16 +214,24 @@ import { Actionsheet } from 'vux'
           'backward': !this.isTitleBarForward,
           'forward': this.isTitleBarForward
         }
+      },
+      place () {
+        return map(filter(BUILDINGS, item => item.en === this.$route.params.name), 'name')[0]
+      }
+    },
+    watch: {
+      '$route.query' () {
+        this.activeTab = find(this.tabs, tab => tab.en === this.$route.query.tab)
+        this.fetchData()
       }
     },
     created () {
-      // this.fetchData()
-
+      this.fetchData()
     },
     mounted () {
-      this.tabs = tabs
       this.$nextTick(() => {
         this.setScrollWidth()
+
         this.scroll = new BScroll(this.$refs.titles, {
           scrollX: true,
           scrollY: false,
@@ -239,6 +253,9 @@ import { Actionsheet } from 'vux'
       })
     },
     methods: {
+      demo () {
+        // debugger
+      },
       refresh () {
         // TODO: 页面重载or重新请求部分接口数据？
         window.location.reload()
@@ -247,8 +264,6 @@ import { Actionsheet } from 'vux'
 
       },
       getSelectedMenu (key, item) {
-        console.log(key)
-        console.log(item)
         this.$vux.toast.text(item, 'middle')
         // this.$vux.toast.text(item)
       },
@@ -264,7 +279,9 @@ import { Actionsheet } from 'vux'
       onNavTap (e) {
         let $el = $(e.target)
         let idx = $(e.target).index()
-        this.activeNavIndex = idx
+        // this.activeNavIndex = idx
+        this.$router.push({query: {tab: tabs[idx].en}})
+
         // this.isTitleBarForward = true
         // this.titleBarStyle = Object.assign({}, this.titleBarStyle, {
         //   left: `${e.target.offsetLeft}px`,
@@ -272,20 +289,24 @@ import { Actionsheet } from 'vux'
         // })
       },
       fetchData () {
+        this.topics.splice(0)
         api.getTopics()
-          .then(res => {
-            this.topics = res.data
-            debugger
+          .then(({ data }) => {
+            this.topics = data
           })
           .catch(err => {
 
           })
       },
       setScrollWidth () {
-
+        let totalWidth = 0
+        this.$refs.lis.forEach(li => {
+          totalWidth += li.getBoundingClientRect().width
+        })
+        this.scrollWidth = `${totalWidth}px`
       },
       filter () {
-        console.log('---filter')
+        // console.log('---filter')
       },
       onScroll (pos) {
 

@@ -17,7 +17,8 @@
     </div>
   </div>
   <div class="bd pt10 pb10">
-    <div class="content mb20" v-html="$get(floor, 'content')"></div>
+    <div class="content mb20" 
+      v-html="preHandleTopic(floor, 'content')"></div>
     <div class="time text-right">2017-11-02 12:22</div>
   </div>
   <div class="ft pt10">
@@ -42,6 +43,16 @@
 </template>
 
 <script>
+
+import { cloneDeep } from 'lodash'
+
+import { expMeanning, EXP_COL_NUM_IN_SPRITE, EXP_SIZE_IN_SPRITE } from 'data'
+
+// const EXP_SIZE_IN_SPRITE = 32
+// const SCALE = 960 / 16 / 15
+// const EXP_SIZE_WIDTH = 960 / SCALE
+// const EXP_SIZE_HEIGHT = 768 / SCALE
+
 export default {
   props: {
     floor: {},
@@ -54,6 +65,36 @@ export default {
   methods: {
     gotoReply () {
       this.$router.push({name: 'Reply'})
+    },
+    preHandleTopic ({ content }, ...args) {
+      let _ctx = cloneDeep(content)
+      let _backup = cloneDeep(content)
+      const emojiExp = /\[([\u4e00-\u9fa5\w]+)\]/g
+      let aMatch
+
+      while ((aMatch = emojiExp.exec(_ctx)) !== null) {
+        let _img = this.getEmoji(aMatch)
+        _ctx = _ctx.replace(aMatch[0], _img)
+      }
+      return _ctx
+    },
+    getEmoji (aMatch) {
+      for (let key in expMeanning) {
+        let _idx = expMeanning[key].indexOf(aMatch[1])
+        if (~_idx) {
+          let _leftOffset = _idx % EXP_COL_NUM_IN_SPRITE * EXP_SIZE_IN_SPRITE
+          let _topOffset = Math.floor(_idx / EXP_COL_NUM_IN_SPRITE) * EXP_SIZE_IN_SPRITE
+
+          let style = `background-image: url(./static/img/${key}.png); background-position: -${_leftOffset}px -${_topOffset}px;`
+
+          // let style = `background-image: url(./static/img/${key}.png); background-position: -${_leftOffset}px -${_topOffset}px; background-size: ${EXP_SIZE_WIDTH}px ${EXP_SIZE_HEIGHT}px`
+
+          let img = `
+            <img src="./static/img/spacer.gif" class="${key}" style="${style}" />
+          `
+          return img
+        }
+      }
     }
   }
 }

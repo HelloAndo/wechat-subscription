@@ -9,7 +9,7 @@
       :tap="true">
       <div class="bd">
         <cell-box>{{$get(topic[0], 'title')}}</cell-box>
-        <floor v-for="(item, i) in topic"
+        <floor v-for="(item, i) in topic" 
           :floor="item" :number="i"
           @click.native="onClick($event)"></floor>
       </div>

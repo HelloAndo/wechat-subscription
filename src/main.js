@@ -35,9 +35,27 @@ router.beforeEach((to, from, next) => {
   next()
 })
 
+router.afterEach((to, from) => {
+  // 500ms是预留给过渡动画的时间
+  setTimeout(() => {
+    store.commit('IOS_TAP_BACK', false)
+  }, 500);
+})
+
+// 监听浏览器后退事件
+window.addEventListener("popstate", function(e) {
+  // TODO:判断为苹果设备才触发，避免右滑返回出现两次页面切换动画
+  userAgent.os === 'iOS' && store.commit('IOS_TAP_BACK', true)
+}, false);
+
+
 /* eslint-disable no-new */
 new Vue({
   store,
   router,
   render: h => h(App)
 }).$mount('#app-box')
+
+
+import { userAgent } from 'tool/userAgent'
+console.log(userAgent)

@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-  <transition :name="isForward ? 'vux-pop-in' : 'vux-pop-out'">
+  <transition :name="animateType">
   <!--<transition name="vux-pop-in">-->
-    <router-view></router-view>
+    <router-view :meta="$route.meta"></router-view>
   </transition>
   </div>
 </template>
@@ -12,9 +12,18 @@ import { mapState, mapGetters } from 'vuex'
 export default {
   name: 'app',
   computed: {
+    ...mapState([
+      'iosTapBack'
+    ]),
     ...mapGetters([
       'isForward'
-    ])
+    ]),
+    animateType () {
+      if (this.$store.state.page.iosTapBack) {
+        return ''
+      }
+      return this.isForward ? 'vux-pop-in' : 'vux-pop-out'
+    }
   }
 }
 </script>
